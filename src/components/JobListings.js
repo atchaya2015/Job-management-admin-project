@@ -1,147 +1,239 @@
-// components/JobListings.js
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { IconUserPlus } from '@tabler/icons-react';
+import { IconBuilding } from '@tabler/icons-react';
+import { IconWallet } from '@tabler/icons-react';
 
-function JobListings() {
-  const [jobs, setJobs] = useState([]);
-
-  useEffect(() => {
-    // Replace with your actual data fetching logic
-    const fetchedJobs = [
-      {
-        id: 1,
-        title: 'Full Stack Developer',
-        company: 'Amazon',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg',
-        experience: '1-3 yr Exp',
-        location: 'Onsite',
-        salary: 120000,
-        description: 'A user-friendly interface lets you browse stunning photos and videos. Filter destinations based on interests and travel style, and create personalized recommendations.',
-      },
-      {
-        id: 2,
-        title: 'Node Js Developer',
-        company: 'Tesla',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Tesla_T_symbol.svg/800px-Tesla_T_symbol.svg.png',
-        experience: '1-3 yr Exp',
-        location: 'Onsite',
-        salary: 70000,
-        description: 'A user-friendly interface lets you browse stunning photos and videos. Filter destinations based on interests and travel style, and create personalized recommendations.',
-      },
-      {
-        id: 3,
-        title: 'UX/UI Designer',
-        company: 'Orange',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Orange_logo.svg/1200px-Orange_logo.svg.png',
-        experience: '1-3 yr Exp',
-        location: 'Onsite',
-        salary: 90000,
-        description: 'A user-friendly interface lets you browse stunning photos and videos. Filter destinations based on interests and travel style, and create personalized recommendations.',
-      },
-      {
-        id: 4,
-        title: 'Full Stack Developer',
-        company: 'Amazon',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg',
-        experience: '1-3 yr Exp',
-        location: 'Onsite',
-        salary: 110000,
-        description: 'A user-friendly interface lets you browse stunning photos and videos. Filter destinations based on interests and travel style, and create personalized recommendations.',
-      },
-      {
-        id: 5,
-        title: 'Node Js Developer',
-        company: 'Tesla',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Tesla_T_symbol.svg/800px-Tesla_T_symbol.svg.png',
-        experience: '1-3 yr Exp',
-        location: 'Onsite',
-        salary: 65000,
-        description: 'A user-friendly interface lets you browse stunning photos and videos. Filter destinations based on interests and travel style, and create personalized recommendations.',
-      },
-      {
-        id: 6,
-        title: 'UX/UI Designer',
-        company: 'Orange',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Orange_logo.svg/1200px-Orange_logo.svg.png',
-        experience: '1-3 yr Exp',
-        location: 'Onsite',
-        salary: 95000,
-        description: 'A user-friendly interface lets you browse stunning photos and videos. Filter destinations based on interests and travel style, and create personalized recommendations.',
-      },
-      {
-        id: 7,
-        title: 'Full Stack Developer',
-        company: 'Amazon',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg',
-        experience: '1-3 yr Exp',
-        location: 'Onsite',
-        salary: 125000,
-        description: 'A user-friendly interface lets you browse stunning photos and videos. Filter destinations based on interests and travel style, and create personalized recommendations.',
-      },
-      {
-        id: 8,
-        title: 'Node Js Developer',
-        company: 'Tesla',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Tesla_T_symbol.svg/800px-Tesla_T_symbol.svg.png',
-        experience: '1-3 yr Exp',
-        location: 'Onsite',
-        salary: 75000,
-        description: 'A user-friendly interface lets you browse stunning photos and videos. Filter destinations based on interests and travel style, and create personalized recommendations.',
-      },
-    ];
-
-    // Set all jobs directly without filtering
-    setJobs(fetchedJobs);
-  }, []); // Remove salaryRange dependency
-
-  const jobListingStyle = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    gap: '20px',
-    padding: '20px',
-  };
-
-  const jobCardStyle = {
-    border: '1px solid #ddd',
+const jobCardStyles = {
+  card: {
+    border: '1px solid #e0e0e0',
     borderRadius: '8px',
     padding: '15px',
+    marginBottom: '20px',
+    width: '240px', 
+    height:'300px',// Roughly 25% width with spacing
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
     display: 'flex',
     flexDirection: 'column',
+  },
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    textAlign: 'center',
-  };
-
-  const logoStyle = {
-    width: '50px',
-    height: '50px',
     marginBottom: '10px',
-  };
-
-  const applyButtonStyle = {
-    backgroundColor: '#007bff',
+  },
+  logoContainer: {
+    width: '80px',
+    height: '40px',
+    borderRadius: '4px',
+    overflow: 'hidden',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f9f9f9', // Placeholder background
+  },
+  logo: {
+    maxWidth: '100%',
+    maxHeight: '100%',
+    objectFit: 'contain',
+  },
+  postedTime: {
+    fontSize: '0.8rem',
+    color: '#757575',
+    backgroundColor: '#B0D9FF',
+    padding: '2px 5px',
+    borderRadius: '4px',
+  },
+  title: {
+    fontSize: '1.2rem',
+    fontWeight: 'bold',
+    marginBottom: '8px',
+    color: '#000000',
+  },
+  details: {
+    display: 'flex',
+    gap: '15px',
+    marginBottom: '10px',
+    fontSize: '0.9rem',
+    color: '#545454',
+  },
+  detailItem: {
+    // No specific styling needed for individual items for now
+  },
+  description: {
+    marginBottom: '15px',
+    color: '#555555',
+    fontSize: '14px',
+  },
+  descriptionPoint: {
+    listStyleType: 'disc',
+    marginLeft: '15px',
+    marginBottom: '5px',
+  },
+  applyButton: {
+    backgroundColor: ' #00AAFF',
     color: 'white',
-    padding: '10px 15px',
     border: 'none',
-    borderRadius: '5px',
+    borderRadius: '4px',
+    padding: '10px 15px',
     cursor: 'pointer',
-    marginTop: '15px',
-  };
+    fontSize: '1rem',
+    fontWeight: 'medium',
+    textAlign: 'center',
+    textDecoration: 'none',
+    display: 'inline-block',
+  },
+  applyButtonHover: {
+    backgroundColor: '#0056b3',
+  },
+};
+
+function JobCard({ logoSrc, postedTime, title, experience, type, salary, descriptionPoints, applyLink }) {
+  return (
+    <div style={jobCardStyles.card}>
+      <div style={jobCardStyles.header}>
+        <div style={jobCardStyles.logoContainer}>
+          {logoSrc ? <img src={logoSrc} alt="Company Logo" style={jobCardStyles.logo} /> : 'Logo'}
+        </div>
+        <div style={jobCardStyles.postedTime}>{postedTime}</div>
+      </div>
+      <h3 style={jobCardStyles.title}>{title}</h3>
+      <div style={jobCardStyles.details}>
+        <span style={jobCardStyles.detailItem}><IconUserPlus size={16} style={{ marginRight: '5px', verticalAlign: 'middle' }} />
+        {experience}</span>
+        <span style={jobCardStyles.detailItem}><IconBuilding size={16} style={{ marginRight: '5px', verticalAlign: 'middle' }} />{type}</span>
+        <span style={jobCardStyles.detailItem}><IconWallet size={16} style={{ marginRight: '5px', verticalAlign: 'middle' }} />{salary}</span>
+      </div>
+      <div style={jobCardStyles.description}>
+        {descriptionPoints.map((point, index) => (
+          <li key={index} style={jobCardStyles.descriptionPoint}>
+            {point}
+          </li>
+        ))}
+      </div>
+      <a href={applyLink} style={jobCardStyles.applyButton} target="_blank" rel="noopener noreferrer">
+        Apply Now
+      </a>
+    </div>
+  );
+}
+
+function JobListing() {
+  const jobListings = [
+    {
+      logoSrc: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg',
+      postedTime: '24h Ago',
+      title: 'Full Stack Developer',
+      experience: '1-3 yr Exp',
+      type: 'Onsite',
+      salary: '12LPA',
+      descriptionPoints: [
+        'A user-friendly interface lets you browse stunning photos and videos.',
+        'Filter destinations based on interests and travel style, and create personalized.',
+      ],
+      applyLink: '#apply',
+    },
+    {
+      logoSrc: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Tesla_T_symbol.svg/800px-Tesla_T_symbol.svg.png',
+      postedTime: '24h Ago',
+      title: 'Node Js Developer',
+      experience: '1-3 yr Exp',
+      type: 'Onsite',
+      salary: '12LPA',
+      descriptionPoints: [
+        'A user-friendly interface lets you browse stunning photos and videos.',
+        'Filter destinations based on interests and travel style, and create personalized.',
+      ],
+      applyLink: '#apply',
+    },
+    {
+      logoSrc: 'download.png',
+      postedTime: '24h Ago',
+      title: 'UX / UI Designer',
+      experience: '1-3 yr Exp',
+      type: 'Onsite',
+      salary: '12LPA',
+      descriptionPoints: [
+        'A user-friendly interface lets you browse stunning photos and videos.',
+        'Filter destinations based on interests and travel style, and create personalized.',
+      ],
+      applyLink: '#apply',
+    },
+    {
+      logoSrc: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg',
+      postedTime: '24h Ago',
+      title: 'Full Stack Developer',
+      experience: '1-3 yr Exp',
+      type: 'Onsite',
+      salary: '12LPA',
+      descriptionPoints: [
+        'A user-friendly interface lets you browse stunning photos and videos.',
+        'Filter destinations based on interests and travel style, and create personalized.',
+      ],
+      applyLink: '#apply',
+    },
+    {
+      logoSrc: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Tesla_T_symbol.svg/800px-Tesla_T_symbol.svg.png',
+      postedTime: '24h Ago',
+      title: 'Node Js Developer',
+      experience: '1-3 yr Exp',
+      type: 'Onsite',
+      salary: '12LPA',
+      descriptionPoints: [
+        'A user-friendly interface lets you browse stunning photos and videos.',
+        'Filter destinations based on interests and travel style, and create personalized.',
+      ],
+      applyLink: '#apply',
+    },
+    {
+      logoSrc: 'download.png',
+      postedTime: '24h Ago',
+      title: 'UX / UI Designer',
+      experience: '1-3 yr Exp',
+      type: 'Onsite',
+      salary: '12LPA',
+      descriptionPoints: [
+        'A user-friendly interface lets you browse stunning photos and videos.',
+        'Filter destinations based on interests and travel style, and create personalized.',
+      ],
+      applyLink: '#apply',
+    },
+    {
+      logoSrc: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg',
+      postedTime: '24h Ago',
+      title: 'Full Stack Developer',
+      experience: '1-3 yr Exp',
+      type: 'Onsite',
+      salary: '12LPA',
+      descriptionPoints: [
+        'A user-friendly interface lets you browse stunning photos and videos.',
+        'Filter destinations based on interests and travel style, and create personalized.',
+      ],
+      applyLink: '#apply',
+    },
+    {
+      logoSrc: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Tesla_T_symbol.svg/800px-Tesla_T_symbol.svg.png',
+      postedTime: '24h Ago',
+      title: 'Node Js Developer',
+      experience: '1-3 yr Exp',
+      type: 'Onsite',
+      salary: '12LPA',
+      descriptionPoints: [
+        'A user-friendly interface lets you browse stunning photos and videos.',
+        'Filter destinations based on interests and travel style, and create personalized.',
+      ],
+      applyLink: '#apply',
+    },
+  ];
 
   return (
-    <div style={jobListingStyle}>
-      {jobs.map((job) => (
-        <div key={job.id} style={jobCardStyle}>
-          <img src={job.logo} alt={`${job.company} Logo`} style={logoStyle} />
-          <h3>{job.title}</h3>
-          <p>{job.experience}</p>
-          <p>{job.location}</p>
-          <p>{job.salary / 10000} LPA</p>
-          <p>{job.description}</p>
-          <button style={applyButtonStyle}>Apply Now</button>
-          <p style={{ fontSize: '0.8em', marginTop: '10px' }}>24h Ago</p>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'flex-start', padding: '20px' }}>
+      {jobListings.map((job, index) => (
+        <div key={index} style={{ width: 'calc(25% - 20px)' }}>
+          <JobCard {...job} />
         </div>
       ))}
     </div>
   );
 }
 
-export default JobListings;
+export default JobListing;

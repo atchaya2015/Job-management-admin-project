@@ -6,12 +6,21 @@ const navStyles = {
   navContainerStyle: {
     display: 'flex',
     backgroundColor: 'white',
-    borderRadius: '35px',
-    marginTop: '20px',
+    borderRadius: '122px',
+    marginTop: '16px',
     padding: '10px',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     gap: '15px',
     justifyContent: 'center',
+    width: '838px',
+    height: '40px',
+    // Remove absolute positioning
+    // top: '21px',
+    // left: '275px',
+    border: '1px solid #FFFFFF',
+    // Add styles to center the navbar horizontally
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   titleStyle: {
     padding: '16px',
@@ -28,20 +37,25 @@ const navStyles = {
     borderRadius: '8px',
   },
   linkActiveStyle: {
-    backgroundColor: '#e0e0e0',
-    color: '#007bff',
+    backgroundColor: 'white',
+    color: '#333',
   },
   buttonStyle: {
-    backgroundColor: 'purple',
+    backgroundColor: '#A128FF',
     color: 'white',
     padding: '10px 16px',
     border: 'none',
-    borderRadius: '8px',
+    borderRadius: '30px',
     fontSize: '16px',
     fontWeight: 500,
     cursor: 'pointer',
     textDecoration: 'none',
   },
+  imagestyle:{
+    height:'44.68px',
+    width: '44px',
+    
+  }
 };
 
 function Navfile({ onCreateJobClick }) {
@@ -49,7 +63,7 @@ function Navfile({ onCreateJobClick }) {
 
   return (
     <div style={navStyles.navContainerStyle}>
-      <div style={navStyles.titleStyle}>Job Board</div>
+      <img src = "Capture4.JPG" style={navStyles.imagestyle}/>
       <Link to="/" style={{ ...navStyles.linkStyle, ...(active === '/' ? navStyles.linkActiveStyle : {}) }}>
         Home
       </Link>

@@ -9,6 +9,7 @@ function CreateJobForm({ onSubmit, onClose }) {
     jobType: 'FullTime',
     salaryFrom: '',
     salaryTo: '',
+    applicationDeadline: '', // Added application deadline
     description: '',
   });
 
@@ -21,7 +22,7 @@ function CreateJobForm({ onSubmit, onClose }) {
   };
 
   const handlePublish = () => {
-    onSubmit({ ...formData, status: 'published', id: Date.now() }); // Add status and unique ID
+    onSubmit({ ...formData, status: 'published', id: Date.now() });
     setFormData({
       title: '',
       company: '',
@@ -29,12 +30,13 @@ function CreateJobForm({ onSubmit, onClose }) {
       jobType: 'FullTime',
       salaryFrom: '',
       salaryTo: '',
+      applicationDeadline: '',
       description: '',
     });
   };
 
   const handleSaveDraft = () => {
-    onSubmit({ ...formData, status: 'draft', id: Date.now() }); // Add status and unique ID
+    onSubmit({ ...formData, status: 'draft', id: Date.now() });
     setFormData({
       title: '',
       company: '',
@@ -42,15 +44,16 @@ function CreateJobForm({ onSubmit, onClose }) {
       jobType: 'FullTime',
       salaryFrom: '',
       salaryTo: '',
+      applicationDeadline: '',
       description: '',
     });
   };
 
   return (
-    <div>
+    <div style={formStyles.container}>
       <h2 style={formStyles.title}>Create Job Opening</h2>
-      <div style={formStyles.form}>
-        <div style={formStyles.inputGroup}>
+      <div style={formStyles.formGrid}>
+        <div style={formStyles.gridItem}>
           <label htmlFor="title" style={formStyles.label}>
             Job Title
           </label>
@@ -64,7 +67,7 @@ function CreateJobForm({ onSubmit, onClose }) {
             placeholder="Full Stack Developer"
           />
         </div>
-        <div style={formStyles.inputGroup}>
+        <div style={formStyles.gridItem}>
           <label htmlFor="company" style={formStyles.label}>
             Company Name
           </label>
@@ -78,7 +81,7 @@ function CreateJobForm({ onSubmit, onClose }) {
             placeholder="Amazon"
           />
         </div>
-        <div style={formStyles.inputGroup}>
+        <div style={formStyles.gridItem}>
           <label htmlFor="location" style={formStyles.label}>
             Location
           </label>
@@ -92,7 +95,7 @@ function CreateJobForm({ onSubmit, onClose }) {
             placeholder="Chennai"
           />
         </div>
-        <div style={formStyles.inputGroup}>
+        <div style={formStyles.gridItem}>
           <label htmlFor="jobType" style={formStyles.label}>
             Job Type
           </label>
@@ -109,7 +112,7 @@ function CreateJobForm({ onSubmit, onClose }) {
             <option value="Internship">Internship</option>
           </select>
         </div>
-        <div style={formStyles.inputGroup}>
+        <div style={formStyles.gridItemSalary}>
           <label style={formStyles.label}>Salary Range</label>
           <div style={{ display: 'flex', gap: '10px' }}>
             <input
@@ -130,7 +133,20 @@ function CreateJobForm({ onSubmit, onClose }) {
             />
           </div>
         </div>
-        <div style={formStyles.inputGroup}>
+        <div style={formStyles.gridItemDeadline}>
+          <label htmlFor="applicationDeadline" style={formStyles.label}>
+            Application Deadline
+          </label>
+          <input
+            type="date"
+            id="applicationDeadline"
+            name="applicationDeadline"
+            value={formData.applicationDeadline}
+            onChange={handleChange}
+            style={formStyles.input}
+          />
+        </div>
+        <div style={formStyles.gridItemFull}>
           <label htmlFor="description" style={formStyles.label}>
             Job Description
           </label>
@@ -143,32 +159,54 @@ function CreateJobForm({ onSubmit, onClose }) {
             placeholder="Please share a description to let the candidate know"
           />
         </div>
-        <div style={formStyles.buttonGroup}>
-          <button type="button" style={formStyles.draftButton} onClick={handleSaveDraft}>
-            Save Draft
-          </button>
-          <button type="button" style={formStyles.publishButton} onClick={handlePublish}>
-            Publish »
-          </button>
-        </div>
+      </div>
+      <div style={formStyles.buttonContainer}>
+        <button type="button" style={formStyles.draftButton} onClick={handleSaveDraft}>
+          Save Draft
+        </button>
+        <button type="button" style={formStyles.publishButton} onClick={handlePublish}>
+          Publish »
+        </button>
       </div>
     </div>
   );
 }
 
 const formStyles = {
+  container: {
+    padding: '5px',
+    borderRadius: '8px',
+    maxWidth: '700px',
+    width: '90%',
+    backgroundColor: '#fff',
+    
+  },
   title: {
     fontSize: '24px',
     fontWeight: 'bold',
     marginBottom: '20px',
-    color: '#333',
+    color: '#222222',
+    textAlign: 'center',
   },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
+  formGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 1fr)',
     gap: '15px',
   },
-  inputGroup: {
+  gridItem: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  gridItemFull: {
+    gridColumn: '1 / -1',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  gridItemSalary: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  gridItemDeadline: {
     display: 'flex',
     flexDirection: 'column',
   },
@@ -176,13 +214,14 @@ const formStyles = {
     fontSize: '16px',
     fontWeight: 'medium',
     marginBottom: '5px',
-    color: '#555',
+    color: '#636363',
   },
   input: {
     padding: '10px',
     border: '1px solid #ccc',
     borderRadius: '4px',
     fontSize: '16px',
+    boxSizing: 'border-box',
   },
   select: {
     padding: '10px',
@@ -190,26 +229,27 @@ const formStyles = {
     borderRadius: '4px',
     fontSize: '16px',
     cursor: 'pointer',
+    boxSizing: 'border-box',
   },
   textarea: {
     padding: '10px',
     border: '1px solid #ccc',
     borderRadius: '4px',
     fontSize: '16px',
-    minHeight: '100px',
+    minHeight: '120px',
+    boxSizing: 'border-box',
   },
-  buttonGroup: {
+  buttonContainer: {
     display: 'flex',
-    gap: '10px',
-    marginTop: '20px',
     justifyContent: 'space-between',
+    marginTop: '25px',
   },
   draftButton: {
     backgroundColor: '#f0f0f0',
     color: '#333',
     border: '1px solid #ccc',
     borderRadius: '4px',
-    padding: '10px 15px',
+    padding: '10px 20px',
     fontSize: '16px',
     cursor: 'pointer',
   },
@@ -218,7 +258,7 @@ const formStyles = {
     color: '#fff',
     border: 'none',
     borderRadius: '4px',
-    padding: '10px 15px',
+    padding: '10px 20px',
     fontSize: '16px',
     cursor: 'pointer',
   },
